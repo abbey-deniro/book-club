@@ -3,8 +3,13 @@ import pymongo
 from uuid import uuid4
 import bcrypt
 from pymongo import MongoClient
+import boto3
 
+queue_client = boto3.resource('sqs', region_name="us-west-2",
+                              aws_access_key_id="AKIAQXARKCPURJKEVTNY",
+                              aws_secret_access_key="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")
 
+queue = queue_client.get_queue_by_name(QueueName='EmailQueue')
 client = MongoClient(
     'mongodb+srv://team1:fV7v57oPgnrrhiiP@theclub.bzkoudj.mongodb.net/?retryWrites=true&w=majority')
 db = client['Bookclub']['user']
@@ -34,7 +39,7 @@ def lambda_handler(event, context):
         'Active': Active,
         'Clubs': Clubs
     })
-
+    respone = queue.send_message(MessageBody='{} , {}'.format(email, code))
     return {
         'Name': name,
         'Email': email,
