@@ -1,0 +1,74 @@
+
+Postman URL: localhost:9000/2015-03-31/functions/function/invocations
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Docker Commands
+
+UserCreate:
+docker build -t user_create:1 .
+docker run -d -p 9000:8080 --name user_create user_create:1
+
+UserUpdate:
+docker build -t user_update:1 .
+docker run -d -p 9000:8080 --name user_update user_update:1
+
+UserDelete:
+docker build -t user_delete:1 .
+docker run -d -p 9000:8080 --name user_delete user_delete:1
+
+UserSendEmail:
+docker build -t user_email:1 .
+docker run -d -p 9000:8080 --name user_email user_email:1
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Documentation 
+
+UserCreate JSON:
+
+{
+    "body":{
+    "Name": "req_body['Name']",
+    "Email" : "req_body['Email']",
+    "Username" :"req_body['Username']",
+    "Password" : "req_body['Password']",
+    "Active": false,
+    "Clubs": {
+        "Naruto":"Member",
+        "JJK": "Owner"
+    }
+    }
+}
+
+UserUpdate JSON:
+
+{
+    "body":{
+    "Name": "nirvik",
+    "Email" : "req_body['Email']",
+    "Username" :"AnimeLover42069",
+    "Active": true,
+    "Clubs": {
+        "Naruto":"Member",
+        "JJK": "Owner",
+        "One Punch":"Member",
+        "Demon Slayer":"Owner"
+    }
+    }
+}
+
+UserDelete JSON:
+
+{
+    "body":{
+    "Email" : "req_body['Email']"
+    }
+}
+
+UserSendEmail JSON:
+
+{
+    "body":{
+    "Receiver" : "nirviks16@gmail.com",
+    "Code":69420
+    }
+}
