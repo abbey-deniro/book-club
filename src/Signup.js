@@ -16,13 +16,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#426B69',
+            main: '#314772',
         },
         secondary: {
-            main: '#8BB174',
+            main: '#4D6FB3',
         },
         darkest: {
-            main: "#222E50",
+            main: "#00171F",
         }
     }
 });
@@ -43,7 +43,7 @@ export default function SignUp() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 25,
+                        marginTop: 10,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',

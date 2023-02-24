@@ -17,13 +17,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#426B69',
+            main: '#314772',
         },
         secondary: {
-            main: '#8BB174',
+            main: '#4D6FB3',
         },
         darkest: {
-            main: "#222E50",
+            main: "#00171F",
         }
     }
 });
@@ -44,7 +44,7 @@ export default function SignIn() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 25,
+                        marginTop: 10,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -78,7 +78,7 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="secondary" />}
                             label="Remember me"
                         />
                         <Button
@@ -91,12 +91,12 @@ export default function SignIn() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link href="#" variant="body2" color="darkest.main">
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="#" variant="body2" color="darkest.main">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
