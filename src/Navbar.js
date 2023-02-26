@@ -81,7 +81,6 @@ function ResponsiveAppBar() {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="white"
-              bgcolor="green"
             >
               <MenuIcon />
             </IconButton>
@@ -126,17 +125,16 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              bgcolor: 'green'
             }}
           >
           </Typography>
           {/* pages */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', bgcolor: 'green' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block', bgcolor: 'red' }}
+                sx={{ my: 2, color: 'white', display: 'block'}}
               >
                 {page}
               </Button>
@@ -145,7 +143,7 @@ function ResponsiveAppBar() {
           </Box>
           
             {/* avatar icon right-corner */}
-          <Box sx={{ flexGrow: 0, bgcolor:'green' }}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* Change alt to users first and last name and add avatar for if no one is logged in*/}
@@ -170,7 +168,7 @@ function ResponsiveAppBar() {
               bgcolor="red"
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu} bgcolor="red">
+                <MenuItem key={setting} onClick={handleCloseUserMenu} >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
