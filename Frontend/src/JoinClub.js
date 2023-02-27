@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import EmailIcon from '@mui/icons-material/Email';
 
 const theme = createTheme({
     palette: {
@@ -45,7 +46,7 @@ export default function SignIn() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <AddIcon />
+                    <EmailIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Join Club

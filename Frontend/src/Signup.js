@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -26,15 +27,45 @@ const theme = createTheme({
         }
     }
 });
+const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    },
+};
+const register = (Name, Email, Username, Password, Active, Clubs) => {
+
+    axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
+        "body": {
+            Name,
+            Email,
+            Username,
+            Password,
+            Active,
+            Clubs
+        }
+    }, config)
+        .then(res => {
+            let userInfo = res.data;
+        })
+        .catch(e => {
+            console.log("Register Error: " + e);
+        })
+};
 
 export default function SignUp() {
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
             email: data.get('email'),
             password: data.get('password'),
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
+            username: data.get('username')
         });
+        register("name", "email", "username", "password", false, { "book": "yourmom" })
+
     };
 
     return (
@@ -118,7 +149,7 @@ export default function SignUp() {
                         >
                             Sign Up
                         </Button>
-                        <Grid container  justifyContent ="center">
+                        <Grid container justifyContent="center">
                             <Grid item>
                                 <Link href="/login" variant="body2">
                                     Already have an account? Sign in
