@@ -9,12 +9,24 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Calendar from 'react-calendar';
+import Stack from '@mui/material/Stack';
 // import useState from 'react';
 import { useState } from 'react';
+import Button from '@mui/material/Button';
 import './Calender.css';
 // import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth = 240;
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1.5),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    height: '3rem',
+  }));
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -34,33 +46,20 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#314772',
+        },
+        secondary: {
+            main: '#4D6FB3',
+        },
+        darkest: {
+            main: "#00171F",
+        }
+    }
+});
 
 function DashboardContent() {
   const [value, onChange] = useState(new Date());
@@ -71,49 +70,54 @@ function DashboardContent() {
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', mt: 6 }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
         </AppBar>
           {/* Background */}
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9} >
-                {/* 1st property */}
+                {/* Welcome/ Book clubs */}
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    minHeight: 250,
                   }}
                 >
                     <Typography component="h1" variant="h4">
-                        Hello, "User.name"
+                        Welcome, "User.name"
                     </Typography>
-                  {/* <Chart /> */}
+                    {/* Book club stack */}
+                    <Stack spacing={2} direction="column" alignContent={'stretch'} justifyContent='space-evenly' paddingTop={'1rem'}>
+                        <Button variant="contained" href="" color="secondary" style={{justifyContent: "flex-start", textTransform: "none"}}>Club Name: Book Title</Button>
+                        <Button variant="contained" href="" color="secondary" style={{justifyContent: "flex-start", textTransform: "none"}}>Club Name: Book Title</Button>
+                        <Button variant="contained" href="" color="secondary" style={{justifyContent: "flex-start", textTransform: "none"}}>Club Name: Book Title</Button>
+                    </Stack>
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
+              {/* Calendar */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 250,
                   }}
                 >
                     <Calendar onChange={onChange} value={value} />
-
-                  {/* <Deposits /> */}
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
+               {/* Buttons on row */}
+               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> */}
+                    <Stack spacing={1} direction="row" justifyContent='space-evenly' >
+                    <Button variant="contained" href="" color="primary" style={{textTransform: "none", width: "30rem", letterSpacing: "2px"}}>Join New Club</Button>
+                    <Button variant="contained" href="" color="primary" style={{textTransform: "none", width: "30rem", letterSpacing: "2px"}}>Create New Club</Button>
+                    </Stack>
                 </Paper>
               </Grid>
             </Grid>
