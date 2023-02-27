@@ -1,13 +1,13 @@
 import random
-import pymongo
 from uuid import uuid4
 import bcrypt
 from pymongo import MongoClient
 import boto3
+import secretKeys
 
 queue_client = boto3.resource('sqs', region_name="us-west-2",
-                              aws_access_key_id="AKIAQXARKCPURJKEVTNY",
-                              aws_secret_access_key="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")
+                            aws_access_key_id=secretKeys.awsAccessKey,
+                            aws_secret_access_key=secretKeys.awsSecretKey)
 
 queue = queue_client.get_queue_by_name(QueueName='EmailQueue')
 client = MongoClient(
@@ -31,8 +31,8 @@ def lambda_handler(event, context):
     hash = bcrypt.hashpw(bytes, salt)
 
     db.insert_one({
+        '_id' : email,
         'Name': name,
-        'Email': email,
         'username': Username,
         'password': hash,
         'VerifcationCode': code,
@@ -41,11 +41,12 @@ def lambda_handler(event, context):
     })
     respone = queue.send_message(MessageBody='{} , {}'.format(email, code))
     return {
+        '_id' : email,
         'Name': name,
-        'Email': email,
         'username': Username,
         'password': hash,
         'VerifcationCode': code,
         'Active': Active,
         'Clubs': Clubs
     }
+
