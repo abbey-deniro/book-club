@@ -64,8 +64,8 @@ export default function SignUp() {
             lastName: data.get('lastName'),
             username: data.get('username')
         });
-        register("name", "email", "username", "password", false, { "book": "yourmom" })
-
+        register("name", data.get('email'), "username", "password", false, { "book": "yourmom" })
+        window.location.href = '/Code';
     };
 
     return (
