@@ -4,6 +4,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Homepage from './Homepage';
 import JoinClub from './JoinClub';
+import Code from './Code';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 
@@ -17,6 +18,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Homepage />} />
         <Route path="/joinClub" element={<JoinClub />} />
+        <Route path="/Code" element={<Code />} />
+
       </Routes>
     </Router>
   );
