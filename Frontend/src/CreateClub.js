@@ -29,8 +29,8 @@ function DashboardContent() {
     const [ imagePreview , setImagePreview ] = React.useState(BookImage);
 
     const handleImage = (e) => {
-        const file = e.target.files[0];
-        setImagePreview(URL.createObjectURL(file));
+        const file = URL.createObjectURL(e.target.files[0]);
+        setImagePreview(file);
     }
 
     const uploadData = (e) => {
