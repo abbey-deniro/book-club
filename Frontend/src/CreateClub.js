@@ -28,13 +28,10 @@ const mdTheme = createTheme({
 function DashboardContent() {
     const [ imagePreview , setImagePreview ] = React.useState(BookImage);
 
+    // When the user clicks on the upload button, get file url they upload
     const handleImage = (e) => {
         const file = URL.createObjectURL(e.target.files[0]);
         setImagePreview(file);
-    }
-
-    const uploadData = (e) => {
-        console.log("Upload Data");
     }
 
     return (
@@ -45,7 +42,7 @@ function DashboardContent() {
                 <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
                     <Grid container spacing={3}>
                         <Grid item xs={8} md={8} lg={9} >
-                            {/* Welcome/ Book clubs */}
+                            {/* Create a Book club title */}
                             <Paper
                                 sx={{
                                     p: 2,
@@ -57,7 +54,7 @@ function DashboardContent() {
                                 <Typography component="h1" variant="h4" paddingBottom={'1rem'} paddingLeft={'1rem'}>
                                     Create a Book Club:
                                 </Typography>
-                                {/* Input */}
+                                {/* Club Input -- Name & Code */}
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <Grid item xs={5}
                                         sx={{
@@ -70,9 +67,11 @@ function DashboardContent() {
                                             marginLeft: 6.8
                                         }}
                                     >
+                                        {/* Name and Code Inputes  */}
                                         <TextField required id="outlined-basic" label="Club Name" variant="outlined" />
                                         <TextField required id="outlined-basic" label="Club Code" variant="outlined" inputProps={{ maxLength: 15 }} />
                                     </Grid>
+                                    {/* Book Input -- Title & Length */}
                                     <Grid item xs={5}
                                         sx={{
                                             p: 2,
@@ -82,6 +81,7 @@ function DashboardContent() {
                                             '& > :not(style)': { m: 1, width: '22ch' },
                                         }}
                                     >
+                                        {/* Title & Length */}
                                         <TextField required id="outlined-basic" label="Book Title" variant="outlined" />
                                         <TextField id="outlined-basic" label="Book Length/Pages" variant="outlined" />
                                     </Grid>
@@ -97,6 +97,7 @@ function DashboardContent() {
                                     height: 250,
                                 }}
                             >
+                                {/* Image Preview */}
                                 <img src={imagePreview} width="100%" height="175px" name="bookImage" />
                                 <Button
                                 variant="contained"
@@ -106,11 +107,13 @@ function DashboardContent() {
                                     marginTop: 1.5
                                 }}
                             >
+                                {/* Upload Button calls the handleImage func */}
                                 Upload
                                 <input hidden accept="image/*" type="file" onChange={handleImage} />
                             </Button>
                             </Paper>
                         </Grid>
+                        {/* Create Club Button */}
                         <Button variant="contained" sx={{ marginTop: 3, marginLeft: 3 }} onClick={uploadData}>Create Club</Button>
                     </Grid>
                 </Container>
