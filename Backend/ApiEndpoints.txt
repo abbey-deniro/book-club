@@ -1,0 +1,135 @@
+API URL: https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub
+----------------------------------------------------------------------------------------------------------------------------------------------
+API Endpoints (add API path to end of url)
+
+UserCreate
+API path: /user
+Method: POST 
+JSON:
+{
+    "body":{
+    "Name": "req_body['Name']",
+    "Email" : "req_body['Email']",
+    "Username" :"req_body['Username']",
+    "Password" : "req_body['Password']",
+    "Active": false,
+    "Clubs": {
+        "Naruto":"Member",
+        "JJK": "Owner"
+    }
+    }
+}
+
+UserUpdate
+API path: /user
+Method: PUT  
+JSON:
+{
+    "body":{
+    "Name": "nirvik",
+    "Email" : "req_body['Email']",
+    "Username" :"AnimeLover42069",
+    "Active": true,
+    "Clubs": {
+        "Naruto":"Member",
+        "JJK": "Owner",
+        "One Punch":"Member",
+        "Demon Slayer":"Owner"
+    }
+    }
+}
+
+UserDelete 
+API path: /user
+Method: DELETE
+JSON:
+{
+    "body":{
+    "Email" : "req_body['Email']"
+    }
+}
+
+UserLogin
+API path: /user/login
+Method: POST
+JSON:
+(The username value can be the users email or actual username)
+{
+    "username":"MuteCoot",
+    "password":"password"
+}
+
+UserClubs 
+API path: /user/clubs
+Method: GET
+JSON:
+{
+    "userEmail": "dagonzalez@neumont.student.edu"
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CreateClub 
+API path: /club
+Method: POST 
+JSON:
+{
+  "bookClubCode": "yo",
+  "owner": "dagonzalez@student.neumont.edu",
+  "imageUrl": "noivwenvoiewnvoiewnvew.com",
+  "title": "yo",
+  "name": "name"
+}
+
+GetClub
+API path: /club
+Method: GET 
+JSON:
+{
+  "bookClubCode": "yo"
+}
+
+DeleteClub
+API path: /club
+Method: DELETE 
+JSON:
+{
+  "bookClubCode": "yo"
+}
+
+AddMember
+API path: /club/member
+Method: POST 
+JSON:
+{
+  "bookClubCode": "yo",
+  "userEmail": "dagonzalez@neumont.student.edu"
+}
+
+RemoveMember
+API path: /club/member
+Method: DELETE 
+JSON:
+{
+  "bookClubCode": "yo",
+  "userEmail": "dagonzalez@neumont.student.edu"
+}
+
+CreateComment 
+API path: /club/comment
+Method: POST 
+JSON:
+{
+  "bookClubCode": "yo",
+  "username": "MuteCoot",
+  "comment": "This book ass"
+}
+
+DeleteComment
+API path: /club/comment
+Method: DELETE
+JSON:
+{
+  "bookClubCode": "yo",
+  "time": "2023-02-28 02:20:52.817088"
+}

@@ -24,7 +24,7 @@ const theme = createTheme({
     }
 });
 
-export default function SignIn() {
+export default function Code() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -46,10 +46,10 @@ export default function SignIn() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <EmailIcon />
+                        <EmailIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Join Club
+                        Please Check your Email
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -57,7 +57,7 @@ export default function SignIn() {
                             required
                             fullWidth
                             name="password"
-                            label="Club Password"
+                            label="Activation Code"
                             type="password"
                             id="password"
                             autoComplete="current-password"
@@ -68,7 +68,7 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Add new club
+                            Active Account
                         </Button>
                     </Box>
                 </Box>
