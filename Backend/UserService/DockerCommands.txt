@@ -73,6 +73,12 @@ UserSendEmail JSON:
     }
 }
 
+UserClubs JSON:
+
+{
+    "userEmail": "dagonzalez@neumont.student.edu"
+}
+
 Bookclub CreateClub JSON:
 
 {
@@ -97,7 +103,7 @@ BookClub GetClub, DeleteClub JSON:
   "bookClubCode": "yo"
 }
 
-BookClub RemoveMember, AddMember JSON:
+BookClub AddMember, RemoveMember JSON:
 
 {
   "bookClubCode": "yo",
