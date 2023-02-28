@@ -33,6 +33,10 @@ function DashboardContent() {
         setImagePreview(URL.createObjectURL(file));
     }
 
+    const uploadData = (e) => {
+        console.log("Upload Data");
+    }
+
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: 'flex', mt: 3 }}>
@@ -93,13 +97,13 @@ function DashboardContent() {
                                     height: 250,
                                 }}
                             >
-                                <img src={imagePreview} width="100%" height="100%" name="bookImage" />
+                                <img src={imagePreview} width="100%" height="175px" name="bookImage" />
                                 <Button
                                 variant="contained"
                                 component="label"
                                 startIcon={<PhotoCamera />}
                                 sx={{
-                                    marginTop: 6
+                                    marginTop: 1.5
                                 }}
                             >
                                 Upload
@@ -107,6 +111,7 @@ function DashboardContent() {
                             </Button>
                             </Paper>
                         </Grid>
+                        <Button variant="contained" sx={{ marginTop: 3, marginLeft: 3 }} onClick={uploadData}>Create Club</Button>
                     </Grid>
                 </Container>
             </Box>
