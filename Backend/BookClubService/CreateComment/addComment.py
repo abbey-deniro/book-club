@@ -9,7 +9,7 @@ def lambda_handler(event, context):
         {'$push': {'comments':
             {'user':event['username'], 
             'comment':event['comment'], 
-            'time':datetime.now()}
+            'time':str(datetime.now())}
     }}, upsert= True)
     response = "Added comment"
     

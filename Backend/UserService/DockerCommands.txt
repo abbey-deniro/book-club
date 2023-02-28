@@ -72,3 +72,41 @@ UserSendEmail JSON:
     "Code":69420
     }
 }
+
+Bookclub CreateClub JSON:
+
+{
+  "bookClubCode": "yo",
+  "owner": "dagonzalez@student.neumont.edu",
+  "imageUrl": "noivwenvoiewnvoiewnvew.com",
+  "title": "yo",
+  "name": "name"
+}
+
+BookClub CreateComment JSON:
+
+{
+  "bookClubCode": "yo",
+  "username": "MuteCoot",
+  "comment": "This book ass"
+}
+
+BookClub GetClub, DeleteClub JSON:
+
+{
+  "bookClubCode": "yo"
+}
+
+BookClub RemoveMember, AddMember JSON:
+
+{
+  "bookClubCode": "yo",
+  "userEmail": "dagonzalez@neumont.student.edu"
+}
+
+Bookclub DeleteComment JSON:
+
+{
+  "bookClubCode": "yo",
+  "time": "2023-02-28 02:20:52.817088"
+}

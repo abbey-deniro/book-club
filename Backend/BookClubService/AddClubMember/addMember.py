@@ -4,11 +4,11 @@ client = MongoClient('mongodb+srv://team1:fV7v57oPgnrrhiiP@theclub.bzkoudj.mongo
 db = client['Bookclub']['Clubs']
 
 def lambda_handler(event, context):
-    bookClub = db.find_one({'code' : event['bookClubCode']})
+    bookClub = db.find_one({'_id' : event['bookClubCode']})
     if(bookClub != None):
-        db.find_one_and_update({'code' : event['bookClubCode']}, {'$push': {'members':event['userEmail']}}, upsert= True)
-        response = "Added member"
+        db.find_one_and_update({'_id' : event['bookClubCode']}, {'$push': {'members':event['userEmail']}}, upsert= True)
+        response = {"StatusCode" : 200, "Body":"Added member"}
     else:
-        response = "Invalid code"
+        response = {"StatusCode" : 404, "Body":"Invalid code"}
     
     return response
