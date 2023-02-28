@@ -4,4 +4,5 @@ client = MongoClient('mongodb+srv://team1:fV7v57oPgnrrhiiP@theclub.bzkoudj.mongo
 db = client['Bookclub']['Clubs']
 
 def lambda_handler(event, context):
-    return db.delete_one({'_id' : event['bookClubCode']})
+    db.delete_one({'_id' : event['bookClubCode']})
+    return "Bookclub deleted"
