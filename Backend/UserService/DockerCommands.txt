@@ -73,6 +73,13 @@ UserSendEmail JSON:
     }
 }
 
+UserLogin JSON:
+(The username value can be the users email or actual username)
+{
+    "username":"MuteCoot",
+    "password":"password"
+}
+
 UserClubs JSON:
 
 {
