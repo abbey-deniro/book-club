@@ -34,6 +34,10 @@ function DashboardContent() {
         setImagePreview(file);
     }
 
+    const uploadData = () => {
+        console.log("Upload Data");
+    }
+
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: 'flex', mt: 3 }}>
