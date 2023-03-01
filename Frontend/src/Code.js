@@ -25,6 +25,8 @@ const theme = createTheme({
 });
 
 export default function Code() {
+    const user = localStorage.getItem('user');
+    console.log(user);
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

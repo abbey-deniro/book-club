@@ -45,7 +45,7 @@ const register = (Name, Email, Username, Password, Active, Clubs) => {
         }
     }, config)
         .then(res => {
-            let userInfo = res.data;
+            localStorage.setItem('user', JSON.stringify(res.data));
         })
         .catch(e => {
             console.log("Register Error: " + e);
@@ -53,6 +53,7 @@ const register = (Name, Email, Username, Password, Active, Clubs) => {
 };
 
 export default function SignUp() {
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
