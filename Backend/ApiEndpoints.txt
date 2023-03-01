@@ -1,4 +1,11 @@
 API URL: https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub
+
+Auth header
+{
+  headers: {
+    "Authorization": "Bearer {token}"
+  }
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------
 API Endpoints (add API path to end of url)
 
