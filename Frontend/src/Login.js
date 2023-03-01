@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 
 const theme = createTheme({
@@ -30,6 +31,7 @@ const theme = createTheme({
 });
 
 export default function SignIn() {
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -53,10 +55,16 @@ export default function SignIn() {
             password,
         }, config)
             .then(res => {
-                localStorage.setItem('user', JSON.stringify(res.data));
-                if (res.data === "Wrong username or password") {
-                } else {
-                    window.location.href = '/home';
+                if (res.data === "Wrong username or password") { }
+                else {
+                    var decoded = jwt_decode(res.data);
+                    localStorage.setItem('user', JSON.stringify(decoded));
+                    let user = JSON.parse(localStorage.getItem('user'))
+                    if (user.Active === false) {
+                        window.location.href = '/Code';
+                    } else {
+                        window.location.href = '/home';
+                    }
                 }
             })
             .catch(e => {
