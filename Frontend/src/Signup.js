@@ -45,7 +45,7 @@ const register = (Name, Email, Username, Password, Active, Clubs) => {
         }
     }, config)
         .then(res => {
-            let userInfo = res.data;
+
         })
         .catch(e => {
             console.log("Register Error: " + e);
@@ -53,6 +53,7 @@ const register = (Name, Email, Username, Password, Active, Clubs) => {
 };
 
 export default function SignUp() {
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -64,8 +65,8 @@ export default function SignUp() {
             lastName: data.get('lastName'),
             username: data.get('username')
         });
-        register("name", "email", "username", "password", false, { "book": "yourmom" })
-
+        register(data.get('firstName'), data.get('email'), data.get('username'), data.get('password'), false, { "book": "yourmom" })
+        window.location.href = '/Code';
     };
 
     return (

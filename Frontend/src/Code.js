@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
+import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -23,14 +24,42 @@ const theme = createTheme({
         }
     }
 });
+const Activate = (Name, Email, Username, Active, Clubs) => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+
+    axios.put(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
+        "body": {
+            Name,
+            Email,
+            Username,
+            Active,
+            Clubs
+        }
+    })
+        .then(res => {
+            console.log(res)
+        })
+        .catch(e => {
+            console.log("Register Error: " + e);
+        })
+};
 
 export default function Code() {
+    let user = JSON.parse(localStorage.getItem('user'))
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            password: data.get('password'),
-        });
+        if (Number(data.get('code')) !== user.VerifcationCode) {
+            console.log('wrong code')
+        } else {
+            console.log('right code')
+            Activate(user.Name, user._id, user.username, true, user.Clubs)
+        }
     };
 
     return (
@@ -49,17 +78,17 @@ export default function Code() {
                         <EmailIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Please Check your Email
+                        Please Check Your Email For Code
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            name="password"
+                            name="code"
                             label="Activation Code"
-                            type="password"
-                            id="password"
+                            type="number"
+                            id="code"
                             autoComplete="current-password"
                         />
                         <Button

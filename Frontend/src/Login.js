@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 
 const theme = createTheme({
@@ -29,6 +31,7 @@ const theme = createTheme({
 });
 
 export default function SignIn() {
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -36,8 +39,38 @@ export default function SignIn() {
             email: data.get('email'),
             password: data.get('password'),
         });
+        Login(data.get('email'), data.get('password'))
+
     };
 
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+    const Login = (username, password) => {
+
+        axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user/login`, {
+            username,
+            password,
+        }, config)
+            .then(res => {
+                if (res.data === "Wrong username or password") { }
+                else {
+                    var decoded = jwt_decode(res.data);
+                    localStorage.setItem('user', JSON.stringify(decoded));
+                    let user = JSON.parse(localStorage.getItem('user'))
+                    if (user.Active === false) {
+                        window.location.href = '/Code';
+                    } else {
+                        window.location.href = '/home';
+                    }
+                }
+            })
+            .catch(e => {
+                console.log("Register Error: " + e);
+            })
+    };
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -61,10 +94,10 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
+                            id="email"
+                            label="Email"
+                            name="email"
+                            autoComplete="Email"
                             autoFocus
                         />
                         <TextField
@@ -72,7 +105,7 @@ export default function SignIn() {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
+                            label="password"
                             type="password"
                             id="password"
                             autoComplete="current-password"
