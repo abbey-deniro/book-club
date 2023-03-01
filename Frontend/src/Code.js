@@ -31,7 +31,7 @@ export default function Code() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
-            password: data.get('password'),
+            password: data.get('code'),
         });
     };
 
@@ -58,10 +58,10 @@ export default function Code() {
                             margin="normal"
                             required
                             fullWidth
-                            name="password"
+                            name="code"
                             label="Activation Code"
                             type="password"
-                            id="password"
+                            id="code"
                             autoComplete="current-password"
                         />
                         <Button
