@@ -11,6 +11,6 @@ def lambda_handler(event, context):
     req_body = event["body"]
     email = req_body['Email']
 
-    myquery = { "Email": email }
+    myquery = { "_id": email }
 
     db.delete_one(myquery)
