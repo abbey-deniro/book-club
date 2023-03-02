@@ -59,25 +59,32 @@ function DashboardContent() {
     };
 
     const createClub = (bookClubCode, owner, imageUrl, title, name) => {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
+        var data = JSON.stringify({
+            "bookClubCode": bookClubCode,
+            "owner": owner,
+            "imageUrl": imageUrl,
+            "title": title,
+            "name": name
+        });
 
+        var config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            data: data
         };
-        axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club`, {
-            bookClubCode: bookClubCode,
-            owner: owner,
-            imageUrl: imageUrl,
-            title: title,
-            name: name
-        }, config)
-            .then(res => {
-                console.log(res)
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
             })
-            .catch(e => {
-                console.log("Register Error: " + e);
-            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
     // When the user clicks on the upload button, get file url they upload
     const handleImage = (e) => {
@@ -86,12 +93,8 @@ function DashboardContent() {
         return file;
     }
 
-    const uploadData = (event) => {
-        event.preventDefault();
-        console.log(title);
-        console.log(name);
-        console.log(code);
-        createClub(code, user._id, handleImage, title, name);
+    const uploadData = (e) => {
+        createClub(code, user._id, "https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.pcmag.com%2Fimagery%2Freviews%2F03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png&imgrefurl=https%3A%2F%2Fwww.pcmag.com%2Freviews%2Fgoogle-photos&tbnid=Uh6nzo0f5OmdJM&vet=12ahUKEwiimqHuqLz9AhXmhu4BHR1-CG4QMygBegUIARDhAQ..i&docid=rNy7JQ__AGMZZM&w=758&h=427&q=google%20images&ved=2ahUKEwiimqHuqLz9AhXmhu4BHR1-CG4QMygBegUIARDhAQ", title, name);
     }
 
     return (
