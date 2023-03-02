@@ -31,23 +31,22 @@ function DashboardContent() {
     const [name, setName] = useState("");
     const [code, setCode] = useState("");
     const [imagePreview, setImagePreview] = React.useState(BookImage);
+    const [bookLength, setBookLength] = useState("");
     let user = JSON.parse(localStorage.getItem('user'))
 
-    const updateUserClub = (Name, Email, Username, Active, Clubs) => {
+    const addMember = (code, Email) => {
 
         const config = {
             headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
         };
 
-        axios.put(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
+        axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/member`, {
             "body": {
-                Name,
-                Email,
-                Username,
-                Active,
-                Clubs
+                code,
+                Email
             }
         }, config)
             .then(res => {
@@ -58,13 +57,14 @@ function DashboardContent() {
             })
     };
 
-    const createClub = (bookClubCode, owner, imageUrl, title, name) => {
+    const createClub = (bookClubCode, owner, imageUrl, title, name, bookLength) => {
         var data = JSON.stringify({
             "bookClubCode": bookClubCode,
             "owner": owner,
             "imageUrl": imageUrl,
             "title": title,
-            "name": name
+            "name": name,
+            "bookLength": bookLength
         });
 
         var config = {
@@ -94,7 +94,8 @@ function DashboardContent() {
     }
 
     const uploadData = (e) => {
-        createClub(code, user._id, "https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.pcmag.com%2Fimagery%2Freviews%2F03aizylUVApdyLAIku1AvRV-39.fit_scale.size_760x427.v1605559903.png&imgrefurl=https%3A%2F%2Fwww.pcmag.com%2Freviews%2Fgoogle-photos&tbnid=Uh6nzo0f5OmdJM&vet=12ahUKEwiimqHuqLz9AhXmhu4BHR1-CG4QMygBegUIARDhAQ..i&docid=rNy7JQ__AGMZZM&w=758&h=427&q=google%20images&ved=2ahUKEwiimqHuqLz9AhXmhu4BHR1-CG4QMygBegUIARDhAQ", title, name);
+        createClub(code, user._id, imagePreview, title, name);
+        addMember(code,user._id);
     }
 
     return (
@@ -146,7 +147,7 @@ function DashboardContent() {
                                     >
                                         {/* Title & Length */}
                                         <TextField required id="outlined-basic" label="Book Title" value={title} onChange={(newValue) => setTitle(newValue.target.value)} variant="outlined" />
-                                        <TextField id="outlined-basic" label="Book Length/Pages" variant="outlined" />
+                                        <TextField id="outlined-basic" label="Book Length/Pages" value={bookLength} onChange={(newValue) => setBookLength(newValue.target.value)} variant="outlined" />
                                     </Grid>
                                 </Grid>
                             </Paper>
