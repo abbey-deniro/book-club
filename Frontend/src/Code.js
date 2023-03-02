@@ -40,7 +40,7 @@ const Activate = (Name, Email, Username, Active, Clubs) => {
             Active,
             Clubs
         }
-    })
+    }, config)
         .then(res => {
             console.log(res)
         })

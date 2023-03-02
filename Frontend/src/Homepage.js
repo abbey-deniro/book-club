@@ -43,6 +43,7 @@ const mdTheme = createTheme({
 });
 
 function DashboardContent() {
+  let user = JSON.parse(localStorage.getItem('user'))
   const [value, onChange] = useState(new Date());
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -68,7 +69,7 @@ function DashboardContent() {
                 }}
               >
                 <Typography component="h1" variant="h4">
-                  Welcome, "User.name"
+                  Welcome, {user.username}
                 </Typography>
                 {/* Book club stack */}
                 <Stack spacing={2} direction="column" alignContent={'stretch'} justifyContent='space-evenly' paddingTop={'1rem'}>
@@ -96,7 +97,7 @@ function DashboardContent() {
               <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 <Stack spacing={1} direction="row" justifyContent='space-evenly' >
                   <Button variant="contained" href="" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Join New Club</Button>
-                  <Button variant="contained" href="" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Create New Club</Button>
+                  <Button variant="contained" href="/createClub" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Create New Club</Button>
                 </Stack>
               </Paper>
             </Grid>
