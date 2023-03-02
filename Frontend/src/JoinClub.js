@@ -24,7 +24,7 @@ const theme = createTheme({
     }
 });
 
-export default function SignIn() {
+export default function JoinClub() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -46,7 +46,7 @@ export default function SignIn() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <EmailIcon />
+                        <EmailIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Join Club
@@ -57,7 +57,7 @@ export default function SignIn() {
                             required
                             fullWidth
                             name="password"
-                            label="Club Password"
+                            label="Club Code"
                             type="password"
                             id="password"
                             autoComplete="current-password"

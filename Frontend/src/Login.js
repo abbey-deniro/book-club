@@ -45,8 +45,8 @@ export default function SignIn() {
 
     const config = {
         headers: {
-            'Content-Type': 'application/json'
-        },
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
     };
     const Login = (username, password) => {
 
@@ -57,6 +57,7 @@ export default function SignIn() {
             .then(res => {
                 if (res.data === "Wrong username or password") { }
                 else {
+                    localStorage.setItem('token', res.data)
                     var decoded = jwt_decode(res.data);
                     localStorage.setItem('user', JSON.stringify(decoded));
                     let user = JSON.parse(localStorage.getItem('user'))
