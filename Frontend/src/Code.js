@@ -54,7 +54,7 @@ export default function Code() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        if (Number(data.get('code')) !== user.VerifcationCode) {
+        if (Number(data.get('code')) !== user.VerificationCode) {
             console.log('wrong code')
         } else {
             console.log('right code')

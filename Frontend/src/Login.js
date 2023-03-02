@@ -42,21 +42,16 @@ export default function SignIn() {
         Login(data.get('email'), data.get('password'))
 
     };
-
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
-        }
-    };
     const Login = (username, password) => {
 
         axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user/login`, {
             username,
-            password,
-        }, config)
+            password
+        })
             .then(res => {
                 if (res.data === "Wrong username or password") { }
                 else {
+                    console.log(res.data)
                     localStorage.setItem('token', res.data)
                     var decoded = jwt_decode(res.data);
                     localStorage.setItem('user', JSON.stringify(decoded));

@@ -38,7 +38,7 @@ function DashboardContent() {
 
         const config = {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
         };
@@ -72,7 +72,7 @@ function DashboardContent() {
             maxBodyLength: Infinity,
             url: 'https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
             data: data
@@ -94,7 +94,7 @@ function DashboardContent() {
     }
 
     const uploadData = (e) => {
-        createClub(code, user._id, imagePreview, title, name);
+        createClub(code, user._id, imagePreview, title, name, bookLength);
         addMember(code,user._id);
     }
 

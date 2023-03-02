@@ -10,6 +10,7 @@ def lambda_handler(event, context):
     club['Owner'] = event['owner']
     club['Image'] = event['imageUrl']
     club['BookTitle'] = event['title']
+    club['BookLength'] = event['bookLength']
     club['Name'] = event['name']
     club['members'] = []
     id = db.insert_one(club).inserted_id
