@@ -96,7 +96,7 @@ function DashboardContent() {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 <Stack spacing={1} direction="row" justifyContent='space-evenly' >
-                  <Button variant="contained" href="" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Join New Club</Button>
+                  <Button variant="contained" href="/joinClub" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Join New Club</Button>
                   <Button variant="contained" href="/createClub" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Create New Club</Button>
                 </Stack>
               </Paper>

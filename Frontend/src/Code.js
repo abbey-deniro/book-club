@@ -59,6 +59,8 @@ export default function Code() {
         } else {
             console.log('right code')
             Activate(user.Name, user._id, user.username, true, user.Clubs)
+            window.location.href = '/Home';
+
         }
     };
 
