@@ -19,7 +19,7 @@ def lambda_handler(event, context):
 
     db.update_one(
         {
-            'Email': email
+            '_id': email
         },
         {
             '$set': {
