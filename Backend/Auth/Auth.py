@@ -9,8 +9,7 @@ def lambda_handler(event, context):
         jwt.decode(token, "team1bookclubthebest", algorithms="HS256")
         allow = "Allow"
     except:
-        response = "Invalid token"
-        return response
+        allow = 'Deny'
     
     response = {
     "principalId": "abcdef", # The principal user identification associated with the token sent by the client.
