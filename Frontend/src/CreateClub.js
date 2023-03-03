@@ -34,6 +34,38 @@ function DashboardContent() {
     const [bookLength, setBookLength] = useState("");
     let decodeUser = JSON.parse(localStorage.getItem('decodedUser'))
 
+    const [theArray, setTheArray] = useState(decodeUser.Clubs);
+
+    const addClubToUser = (Name, Email, Username, Active, Clubs) => {
+        const config = {
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+        };
+
+        axios.put(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
+            "body": {
+                Name,
+                Email,
+                Username,
+                Active,
+                Clubs
+            }
+        }, config)
+            .then(res => {
+                console.log(res)
+                setTheArray(oldArray => [...oldArray, { name: "Owner" }])
+                console.log(theArray)
+                console.log(localStorage.getItem('user'))
+                console.log(decodeUser._id)
+                //window.location.href = '/Home';
+
+            })
+            .catch(e => {
+                console.log("Register Error: " + e);
+            })
+    };
     const addMember = (code, Email) => {
         const config = {
             headers: {
@@ -47,7 +79,7 @@ function DashboardContent() {
         }, config)
             .then(res => {
                 console.log(res)
-                window.location.href = '/Home';
+                addClubToUser(decodeUser.Name, decodeUser._id, decodeUser.username, true, theArray)
             })
             .catch(e => {
                 console.log("Register Error: " + e);
@@ -94,8 +126,7 @@ function DashboardContent() {
 
     const uploadData = () => {
         createClub(code, decodeUser._id, imagePreview, title, name, bookLength);
-        console.log(localStorage.getItem('user'))
-        console.log(decodeUser._id)
+
     }
 
     return (
