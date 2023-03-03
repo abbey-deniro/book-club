@@ -29,7 +29,7 @@ const theme = createTheme({
 const Activate = (Name, Email, Username, Active, Clubs) => {
     const config = {
         headers: {
-            'authorization': `Bearer ${localStorage.getItem('user')}`,
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
         },
     };
@@ -52,7 +52,7 @@ const Activate = (Name, Email, Username, Active, Clubs) => {
 };
 
 export default function Code() {
-    let user = jwt_decode(localStorage.getItem('user'))
+    let user = jwt_decode(localStorage.getItem('token'))
     localStorage.setItem('decodedUser', JSON.stringify(user));
     let decodedUser = JSON.parse(localStorage.getItem('decodedUser'))
     const handleSubmit = (event) => {

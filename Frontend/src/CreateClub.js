@@ -37,7 +37,7 @@ function DashboardContent() {
     const addMember = (code, Email) => {
         const config = {
             headers: {
-                'authorization': `Bearer ${localStorage.getItem('user')}`,
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
         };
@@ -47,7 +47,7 @@ function DashboardContent() {
         }, config)
             .then(res => {
                 console.log(res)
-                //window.location.href = '/Home';
+                window.location.href = '/Home';
             })
             .catch(e => {
                 console.log("Register Error: " + e);
@@ -69,7 +69,7 @@ function DashboardContent() {
             maxBodyLength: Infinity,
             url: 'https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club',
             headers: {
-                'authorization': `Bearer ${localStorage.getItem('user')}`,
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
             },
             data: data
@@ -78,6 +78,8 @@ function DashboardContent() {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                addMember(code, decodeUser._id);
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -92,7 +94,6 @@ function DashboardContent() {
 
     const uploadData = () => {
         createClub(code, decodeUser._id, imagePreview, title, name, bookLength);
-        addMember(code, decodeUser._id);
         console.log(localStorage.getItem('user'))
         console.log(decodeUser._id)
     }
