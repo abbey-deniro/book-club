@@ -29,11 +29,12 @@ const theme = createTheme({
 });
 const config = {
     headers: {
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
     },
 };
-const register = (Name, Email, Username, Password, Active, Clubs) => {
 
+const register = (Name, Email, Username, Password, Active, Clubs) => {
     axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
         "body": {
             Name,
@@ -45,7 +46,8 @@ const register = (Name, Email, Username, Password, Active, Clubs) => {
         }
     }, config)
         .then(res => {
-
+            localStorage.setItem('user', res.data)
+            window.location.href = '/Code';
         })
         .catch(e => {
             console.log("Register Error: " + e);
@@ -65,8 +67,8 @@ export default function SignUp() {
             lastName: data.get('lastName'),
             username: data.get('username')
         });
-        register(data.get('firstName'), data.get('email'), data.get('username'), data.get('password'), false, { "book": "yourmom" })
-        window.location.href = '/Code';
+        register(data.get('firstName'), data.get('email'), data.get('username'), data.get('password'), false, {})
+
     };
 
     return (

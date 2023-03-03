@@ -32,25 +32,22 @@ function DashboardContent() {
     const [code, setCode] = useState("");
     const [imagePreview, setImagePreview] = React.useState(BookImage);
     const [bookLength, setBookLength] = useState("");
-    let user = JSON.parse(localStorage.getItem('user'))
+    let decodeUser = JSON.parse(localStorage.getItem('decodedUser'))
 
     const addMember = (code, Email) => {
-
         const config = {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'authorization': `Bearer ${localStorage.getItem('user')}`,
                 'Content-Type': 'application/json'
             },
         };
-
         axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/member`, {
-            "body": {
-                code,
-                Email
-            }
+            "bookClubCode": code,
+            "userEmail": Email
         }, config)
             .then(res => {
                 console.log(res)
+                //window.location.href = '/Home';
             })
             .catch(e => {
                 console.log("Register Error: " + e);
@@ -72,7 +69,7 @@ function DashboardContent() {
             maxBodyLength: Infinity,
             url: 'https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'authorization': `Bearer ${localStorage.getItem('user')}`,
                 'Content-Type': 'application/json'
             },
             data: data
@@ -93,9 +90,11 @@ function DashboardContent() {
         return file;
     }
 
-    const uploadData = (e) => {
-        createClub(code, user._id, imagePreview, title, name);
-        addMember(code,user._id);
+    const uploadData = () => {
+        createClub(code, decodeUser._id, imagePreview, title, name, bookLength);
+        addMember(code, decodeUser._id);
+        console.log(localStorage.getItem('user'))
+        console.log(decodeUser._id)
     }
 
     return (

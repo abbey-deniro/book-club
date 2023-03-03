@@ -43,7 +43,7 @@ const mdTheme = createTheme({
 });
 
 function DashboardContent() {
-  let user = JSON.parse(localStorage.getItem('user'))
+  let user = JSON.parse(localStorage.getItem('decodedUser'))
   const [value, onChange] = useState(new Date());
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {

@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 const theme = createTheme({
     palette: {
@@ -24,10 +25,11 @@ const theme = createTheme({
         }
     }
 });
-const Activate = (Name, Email, Username, Active, Clubs) => {
 
+const Activate = (Name, Email, Username, Active, Clubs) => {
     const config = {
         headers: {
+            'authorization': `Bearer ${localStorage.getItem('user')}`,
             'Content-Type': 'application/json'
         },
     };
@@ -50,17 +52,20 @@ const Activate = (Name, Email, Username, Active, Clubs) => {
 };
 
 export default function Code() {
-    let user = JSON.parse(localStorage.getItem('user'))
+    let user = jwt_decode(localStorage.getItem('user'))
+    localStorage.setItem('decodedUser', JSON.stringify(user));
+    let decodedUser = JSON.parse(localStorage.getItem('decodedUser'))
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        if (Number(data.get('code')) !== user.VerifcationCode) {
-            console.log('wrong code')
+        if (Number(data.get('code')) !== decodedUser.VerificationCode) {
+            console.log(decodedUser)
+            console.log("user VerificationCode: " + typeof decodedUser.VerificationCode)
+            console.log("user DataCode: " + typeof Number(data.get('code')))
         } else {
             console.log('right code')
-            Activate(user.Name, user._id, user.username, true, user.Clubs)
+            Activate(decodedUser.Name, decodedUser._id, decodedUser.username, true, decodedUser.Clubs)
             window.location.href = '/Home';
-
         }
     };
 

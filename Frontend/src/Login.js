@@ -35,17 +35,14 @@ export default function SignIn() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
         Login(data.get('email'), data.get('password'))
 
     };
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+            'authorization': `Bearer ${localStorage.getItem('user')}`,
+            'Content-Type': 'application/json'
         }
     };
     const Login = (username, password) => {
@@ -55,7 +52,9 @@ export default function SignIn() {
             password,
         }, config)
             .then(res => {
-                if (res.data === "Wrong username or password") { }
+                if (res.data === "Wrong username or password") { 
+                    console.log("china")
+                }
                 else {
                     localStorage.setItem('token', res.data)
                     var decoded = jwt_decode(res.data);
