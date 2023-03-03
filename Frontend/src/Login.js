@@ -49,13 +49,14 @@ export default function SignIn() {
 
         axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user/login`, {
             username,
-            password,
-        }, config)
+            password
+        })
             .then(res => {
                 if (res.data === "Wrong username or password") { 
                     console.log("china")
                 }
                 else {
+                    console.log(res.data)
                     localStorage.setItem('token', res.data)
                     var decoded = jwt_decode(res.data);
                     localStorage.setItem('user', JSON.stringify(decoded));

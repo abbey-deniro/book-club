@@ -1,10 +1,10 @@
 import jwt
 
 def lambda_handler(event, context):
-    auth_header = event['headers']["Authorization"]
+    auth_header = event['headers']["authorization"]
     token = auth_header.split(" ")[1].strip()
     allow = 'Deny'
-
+    
     try:
         jwt.decode(token, "team1bookclubthebest", algorithms="HS256")
         allow = "Allow"

@@ -4,6 +4,7 @@ import bcrypt
 from pymongo import MongoClient
 import boto3
 import secretKeys
+import jwt
 
 queue_client = boto3.resource('sqs', region_name="us-west-2",
                             aws_access_key_id=secretKeys.awsAccessKey,
@@ -17,36 +18,28 @@ code = random.randrange(1, 99999, 5)
 
 
 def lambda_handler(event, context):
-
+    user = {}
     req_body = event["body"]
-    name = req_body['Name']
-    email = req_body['Email']
-    Username = req_body['Username']
+    user['_id'] = req_body['Email']
+    user['Name'] = req_body['Name']
+    user['username'] = req_body['Username']
     Password = req_body['Password']
-    Active = req_body['Active']
-    Clubs = req_body['Clubs']
+    user['Active'] = req_body['Active']
+    user['Clubs'] = req_body['Clubs']
+    user['VerificationCode'] = code
     password = Password
     bytes = password.encode('utf-8')
     salt = bcrypt.gensalt()
-    hash = bcrypt.hashpw(bytes, salt)
+    user['password'] = bcrypt.hashpw(bytes, salt)
 
-    db.insert_one({
-        '_id' : email,
-        'Name': name,
-        'username': Username,
-        'password': hash,
-        'VerifcationCode': code,
-        'Active': Active,
-        'Clubs': Clubs
-    })
-    respone = queue.send_message(MessageBody='{} , {}'.format(email, code))
-    return {
-        '_id' : email,
-        'Name': name,
-        'username': Username,
-        'password': hash,
-        'VerifcationCode': code,
-        'Active': Active,
-        'Clubs': Clubs
-    }
+    try:
+        db.insert_one(user)
+        sqsResponse = queue.send_message(MessageBody='{} , {}'.format(user['_id'], code))
+
+        del user['password']
+        response = jwt.encode(user, "team1bookclubthebest")
+    except:
+        response = "User with that email already exists"
+
+    return response
 
