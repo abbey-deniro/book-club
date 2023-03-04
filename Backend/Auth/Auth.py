@@ -1,8 +1,9 @@
 import jwt
+import re
 
 def lambda_handler(event, context):
     auth_header = event['headers']["authorization"]
-    token = auth_header.split(" ")[1].strip()
+    token = re.match("Bearer (.+)", auth_header)[1]
     allow = 'Deny'
     
     try:
@@ -11,6 +12,8 @@ def lambda_handler(event, context):
     except:
         allow = 'Deny'
     
+    print(allow)
+
     response = {
     "principalId": "abcdef", # The principal user identification associated with the token sent by the client.
     "policyDocument": {
