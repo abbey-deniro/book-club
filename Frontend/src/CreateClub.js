@@ -34,7 +34,6 @@ function DashboardContent() {
     const [bookLength, setBookLength] = useState("");
     let decodeUser = JSON.parse(localStorage.getItem('decodedUser'))
 
-    const [theArray, setTheArray] = useState(decodeUser.Clubs);
 
     const addClubToUser = (Name, Email, Username, Active, Clubs) => {
         const config = {
@@ -55,11 +54,8 @@ function DashboardContent() {
         }, config)
             .then(res => {
                 console.log(res)
-                setTheArray(oldArray => [...oldArray, { name: "Owner" }])
-                console.log(theArray)
                 console.log(localStorage.getItem('user'))
                 console.log(decodeUser._id)
-                //window.location.href = '/Home';
 
             })
             .catch(e => {
@@ -79,7 +75,8 @@ function DashboardContent() {
         }, config)
             .then(res => {
                 console.log(res)
-                addClubToUser(decodeUser.Name, decodeUser._id, decodeUser.username, true, theArray)
+                window.location.href = '/Home';
+
             })
             .catch(e => {
                 console.log("Register Error: " + e);
