@@ -34,34 +34,6 @@ function DashboardContent() {
     const [bookLength, setBookLength] = useState("");
     let decodeUser = JSON.parse(localStorage.getItem('decodedUser'))
 
-
-    const addClubToUser = (Name, Email, Username, Active, Clubs) => {
-        const config = {
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            },
-        };
-
-        axios.put(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
-            "body": {
-                Name,
-                Email,
-                Username,
-                Active,
-                Clubs
-            }
-        }, config)
-            .then(res => {
-                console.log(res)
-                console.log(localStorage.getItem('user'))
-                console.log(decodeUser._id)
-
-            })
-            .catch(e => {
-                console.log("Register Error: " + e);
-            })
-    };
     const addMember = (code, Email) => {
         const config = {
             headers: {
@@ -70,8 +42,8 @@ function DashboardContent() {
             },
         };
         axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/member`, {
-            "bookClubCode": code,
-            "userEmail": Email
+            code,
+            Email
         }, config)
             .then(res => {
                 console.log(res)
@@ -79,7 +51,9 @@ function DashboardContent() {
 
             })
             .catch(e => {
-                console.log("Register Error: " + e);
+                console.log("Register Error: " + JSON.parse(e.response.data));
+                console.log("code :" + code)
+                console.log("Email :" + Email)
             })
     };
 
