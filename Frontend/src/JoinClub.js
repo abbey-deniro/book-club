@@ -9,6 +9,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
+import axios from "axios";
+
+let decodeUser = JSON.parse(localStorage.getItem('user'))
+
+const addMember = (code, Email) => {
+    const config = {
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        },
+    };
+    axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/member`, {
+        "bookClubCode": code,
+        "userEmail": Email
+    }, config)
+        .then(res => {
+            console.log(res)
+            console.log("code :" + code)
+            console.log("Email :" + Email)
+            window.location.href = '/Home';
+
+        })
+        .catch(e => {
+            console.log("Register Error: " + e);
+            console.log("code :" + code)
+            console.log("Email :" + Email)
+        })
+};
 
 const theme = createTheme({
     palette: {
@@ -31,6 +59,7 @@ export default function JoinClub() {
         console.log({
             password: data.get('password'),
         });
+        addMember(data.get('password'),decodeUser._id)
     };
 
     return (

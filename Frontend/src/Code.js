@@ -45,6 +45,9 @@ const Activate = (Name, Email, Username, Active, Clubs) => {
     }, config)
         .then(res => {
             console.log(res)
+            console.log("user is active")
+            window.location.href = '/Home';
+
         })
         .catch(e => {
             console.log("Register Error: " + e);
@@ -53,8 +56,8 @@ const Activate = (Name, Email, Username, Active, Clubs) => {
 
 export default function Code() {
     let user = jwt_decode(localStorage.getItem('token'))
-    localStorage.setItem('decodedUser', JSON.stringify(user));
-    let decodedUser = JSON.parse(localStorage.getItem('decodedUser'))
+    localStorage.setItem('user', JSON.stringify(user));
+    let decodedUser = JSON.parse(localStorage.getItem('user'))
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -65,7 +68,6 @@ export default function Code() {
         } else {
             console.log('right code')
             Activate(decodedUser.Name, decodedUser._id, decodedUser.username, true, decodedUser.Clubs)
-            window.location.href = '/Home';
         }
     };
 

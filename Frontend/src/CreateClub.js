@@ -32,7 +32,7 @@ function DashboardContent() {
     const [code, setCode] = useState("");
     const [imagePreview, setImagePreview] = React.useState(BookImage);
     const [bookLength, setBookLength] = useState("");
-    let decodeUser = JSON.parse(localStorage.getItem('decodedUser'))
+    let decodeUser = JSON.parse(localStorage.getItem('user'))
 
     const addMember = (code, Email) => {
         const config = {
@@ -42,16 +42,16 @@ function DashboardContent() {
             },
         };
         axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/member`, {
-            code,
-            Email
+            "bookClubCode": code,
+            "userEmail": Email
         }, config)
             .then(res => {
                 console.log(res)
-                window.location.href = '/Home';
+                //window.location.href = '/Home';
 
             })
             .catch(e => {
-                console.log("Register Error: " + JSON.parse(e.response.data));
+                console.log("Register Error: " + e);
                 console.log("code :" + code)
                 console.log("Email :" + Email)
             })
@@ -82,6 +82,7 @@ function DashboardContent() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 addMember(code, decodeUser._id);
+                console.log(code, decodeUser._id)
 
             })
             .catch(function (error) {
