@@ -12,6 +12,12 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import BookImage from './images/book.png';
 import axios from "axios";
 import { useState } from 'react';
+import { uploadFile } from 'react-s3';
+import {awsAccessKey, awsSecretKey} from './awsKeys'
+import { v4 as uuid } from 'uuid';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { styled } from '@mui/material/styles';
+
 const mdTheme = createTheme({
     palette: {
         primary: {
@@ -26,12 +32,34 @@ const mdTheme = createTheme({
     }
 });
 
+console.log(mdTheme)
+const CustomLinearProgress = styled(LinearProgress)(({ }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        backgroundColor: '#BDBDBD',
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 5,
+        backgroundColor: mdTheme.palette.primary.main,
+    },
+}));
+
+const s3Config = {
+    bucketName: 'bookclubteam1',
+    region: 'us-west-2',
+    accessKeyId: awsAccessKey,
+    secretAccessKey: awsSecretKey,
+}
+
 function DashboardContent() {
     const [title, setTitle] = useState("");
     const [name, setName] = useState("");
     const [code, setCode] = useState("");
     const [imagePreview, setImagePreview] = React.useState(BookImage);
     const [bookLength, setBookLength] = useState("");
+    const [imageFile, setImageFile] = useState("");
+    const [loading, setLoading] = useState(false);
     let decodeUser = JSON.parse(localStorage.getItem('user'))
 
     const addMember = (code, Email) => {
@@ -47,7 +75,7 @@ function DashboardContent() {
         }, config)
             .then(res => {
                 console.log(res)
-                //window.location.href = '/Home';
+                window.location.href = '/Home';
 
             })
             .catch(e => {
@@ -57,7 +85,17 @@ function DashboardContent() {
             })
     };
 
-    const createClub = (bookClubCode, owner, imageUrl, title, name, bookLength) => {
+    const createClub = async (bookClubCode, owner, title, name, bookLength) => {
+        let imageUrl;
+
+        var renamedFile = new File([imageFile], `${uuid()}.${imageFile.name.split('.').pop()}`, {type: imageFile.type})
+        await uploadFile(renamedFile, s3Config)
+            .then(data => {
+                console.log(data); 
+                imageUrl = data.location;
+            })
+            .catch(err => console.error(err))
+
         var data = JSON.stringify({
             "bookClubCode": bookClubCode,
             "owner": owner,
@@ -82,7 +120,6 @@ function DashboardContent() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 addMember(code, decodeUser._id);
-                console.log(code, decodeUser._id)
 
             })
             .catch(function (error) {
@@ -91,13 +128,14 @@ function DashboardContent() {
     }
     // When the user clicks on the upload button, get file url they upload
     const handleImage = (e) => {
-        const file = URL.createObjectURL(e.target.files[0]);
-        setImagePreview(file);
-        return file;
+        const file = e.target.files[0];
+        setImagePreview(URL.createObjectURL(file));
+        setImageFile(file);
     }
 
     const uploadData = () => {
-        createClub(code, decodeUser._id, imagePreview, title, name, bookLength);
+        setLoading(true);
+        createClub(code, decodeUser._id, title, name, bookLength);
 
     }
 
@@ -181,7 +219,10 @@ function DashboardContent() {
                             </Paper>
                         </Grid>
                         {/* Create Club Button */}
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems:'center'}}>
                         <Button variant="contained" sx={{ marginTop: 3, marginLeft: 3 }} onClick={uploadData}>Create Club</Button>
+                        {loading ? <CustomLinearProgress variant='indeterminate' sx={{width: '495px', height: '7px', margin: '15px 15px 0px 15px'}}/> : null}
+                        </div>
                     </Grid>
                 </Container>
             </Box>
