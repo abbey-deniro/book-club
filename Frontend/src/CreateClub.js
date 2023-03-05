@@ -17,6 +17,7 @@ import {awsAccessKey, awsSecretKey} from './awsKeys'
 import { v4 as uuid } from 'uuid';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const mdTheme = createTheme({
     palette: {
@@ -32,7 +33,6 @@ const mdTheme = createTheme({
     }
 });
 
-console.log(mdTheme)
 const CustomLinearProgress = styled(LinearProgress)(({ }) => ({
     height: 10,
     borderRadius: 5,
