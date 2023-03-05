@@ -2,8 +2,16 @@ import jwt
 import re
 
 def lambda_handler(event, context):
-    auth_header = event['headers']["authorization"]
-    token = re.match("Bearer (.+)", auth_header)[1]
+    print(event['headers'])
+    token = ''
+    headers = dict(event['headers'])
+    try:
+        print(headers.keys())
+        auth_header = headers['Authorization']
+        token = re.match("Bearer (.+)", auth_header)[1]
+    except:
+        auth_header = headers['authorization']
+        token = re.match("Bearer (.+)", auth_header)[1]
     allow = 'Deny'
     
     try:
