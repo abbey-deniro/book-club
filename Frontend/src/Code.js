@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 const theme = createTheme({
     palette: {
@@ -24,13 +26,49 @@ const theme = createTheme({
     }
 });
 
+const Activate = (Name, Email, Username, Active, Clubs) => {
+    const config = {
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        },
+    };
+
+    axios.put(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user`, {
+        "body": {
+            Name,
+            Email,
+            Username,
+            Active,
+            Clubs
+        }
+    }, config)
+        .then(res => {
+            console.log(res)
+            console.log("user is active")
+            window.location.href = '/Home';
+
+        })
+        .catch(e => {
+            console.log("Register Error: " + e);
+        })
+};
+
 export default function Code() {
+    let user = jwt_decode(localStorage.getItem('token'))
+    localStorage.setItem('user', JSON.stringify(user));
+    let decodedUser = JSON.parse(localStorage.getItem('user'))
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            password: data.get('password'),
-        });
+        if (Number(data.get('code')) !== decodedUser.VerificationCode) {
+            console.log(decodedUser)
+            console.log("user VerificationCode: " + typeof decodedUser.VerificationCode)
+            console.log("user DataCode: " + typeof Number(data.get('code')))
+        } else {
+            console.log('right code')
+            Activate(decodedUser.Name, decodedUser._id, decodedUser.username, true, decodedUser.Clubs)
+        }
     };
 
     return (
@@ -49,17 +87,17 @@ export default function Code() {
                         <EmailIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Please Check your Email
+                        Please Check Your Email For Code
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            name="password"
+                            name="code"
                             label="Activation Code"
-                            type="password"
-                            id="password"
+                            type="number"
+                            id="code"
                             autoComplete="current-password"
                         />
                         <Button

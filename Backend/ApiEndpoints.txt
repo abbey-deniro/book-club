@@ -1,4 +1,20 @@
 API URL: https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub
+
+Auth header (axios)
+{
+  headers: {
+    "authorization": "Bearer {token}"
+  }
+}
+
+example request with auth:
+axios.post({url}, {json/body}, 
+  {
+    headers: {
+      "authorization": `Bearer {token}`
+    }
+  }
+)
 ----------------------------------------------------------------------------------------------------------------------------------------------
 API Endpoints (add API path to end of url)
 
