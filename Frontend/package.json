@@ -18,6 +18,8 @@
     "modal-dialog": "^1.6.3",
     "react": "^18.2.0",
     "react-calendar": "^4.0.0",
+    "react-commentbox": "^3.0.1",
+    "react-comments-section": "^2.0.10",
     "react-dom": "^18.2.0",
     "react-material-ui-calendar": "^0.2.3",
     "react-router-dom": "^6.8.1",
