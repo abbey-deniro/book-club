@@ -75,13 +75,10 @@ JSON:
     "password":"password"
 }
 
+(Needs token to work)
 UserClubs 
 API path: /user/clubs
 Method: GET
-JSON:
-{
-    "userEmail": "dagonzalez@neumont.student.edu"
-}
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
