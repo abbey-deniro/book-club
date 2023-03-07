@@ -15,6 +15,7 @@ import { CommentSection } from 'react-comments-section';
 import axios from 'axios';
 import 'react-comments-section/dist/index.css';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 const mdTheme = createTheme({
     palette: {
@@ -162,19 +163,43 @@ function DashboardContent() {
                             >
                                 {/* comment box */}
 
-                                <Typography component="h1" variant="h5" paddingBottom={'1rem'} paddingLeft={'1rem'}>Comments:</Typography>
-                                <Paper
-                                    sx={{
-                                        p: 3,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        minHeight: 200,
-                                        marginBottom: 3,
-                                    }}
-                                >
+                                <Typography component="h2" variant="h5" paddingBottom={'1rem'} paddingLeft={'1rem'}>Comments:</Typography>
+                                {
+                                    bookclub.comments ?
+                                    bookclub.comments.map(comment => {
+                                        return(
+                                            <Paper
+                                                sx={{
+                                                    p: 3,
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'space-between',
+                                                    minHeight: 200,
+                                                    marginBottom: 3,
+                                                }}
+                                            >
+                                                <Typography component='h6' variant='h6' sx={{textDecoration: 'underline'}}>{comment.user}</Typography>
+                                                <Typography component='h5' variant='h6'>{comment.comment}</Typography>
+                                                <Typography component='h7'>{moment(comment.time).format('HH:mm MM/DD/YYYY')}</Typography>
+                                            </Paper>
+                                        )
 
+                                    }) : 
+                                    <Paper
+                                        sx={{
+                                            p: 3,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            minHeight: 200,
+                                            marginBottom: 3,
+                                        }}
+                                    >
+                                        No comments. Be the first to comment in this club!
+                                    </Paper>
+                                }
                                     {/* Submit comment */}
-                                </Paper>
+                                
                                 <Paper
                                     sx={{
                                         p: 2,

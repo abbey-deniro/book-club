@@ -21,6 +21,7 @@
     "immutable": "^4.2.4",
     "jwt-decode": "^3.1.2",
     "modal-dialog": "^1.6.3",
+    "moment": "^2.29.4",
     "npm": "^9.6.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^8.0.1",
