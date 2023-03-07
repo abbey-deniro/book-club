@@ -98,12 +98,8 @@ JSON:
 }
 
 GetClub
-API path: /club
+API path: /club/{clubCode}
 Method: GET 
-JSON:
-{
-  "bookClubCode": "yo"
-}
 
 DeleteClub
 API path: /club

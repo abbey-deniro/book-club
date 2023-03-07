@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import BookImage from './images/book.png';
@@ -62,7 +62,7 @@ function DashboardContent() {
     };
 
     // Gets the clubs data when the page opens
-    React.useEffect(() => {
+    useEffect(() => {
         //console.log(user)
         axios.get(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/${clubCode}`,
         {headers: {
