@@ -37,7 +37,6 @@ function DashboardContent() {
     const [bookclub, setClub] = useState({});
     const [comment, setComment] = useState('');
 
-
     const postComment = () => {
         console.log(comment);
 
@@ -45,18 +44,42 @@ function DashboardContent() {
             "bookClubCode": clubCode,
             "username": user.username,
             "comment": comment
-        }, {headers: {
-            'authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-        }})
+        }, {
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(res => {
                 console.log(res)
+                getComment()
             })
             .catch(e => {
                 console.log(e)
             })
     };
 
+
+    const getComment = () => {
+        //console.log(user)
+        axios.get(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/${clubCode}`,
+            {
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => {
+                console.log(res)
+                setClub(res.data)
+
+                if (res.data === null || !(res.data.members.includes(user._id))) {
+                    //Someone snuck into the club do something 
+                    console.log("User not in club or club doesnt exist")
+                }
+            })
+            .catch(e => console.log(e));
+    }
     const uploadData = () => {
         console.log("Upload Data");
     };
@@ -65,79 +88,82 @@ function DashboardContent() {
     useEffect(() => {
         //console.log(user)
         axios.get(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/${clubCode}`,
-        {headers: {
-            'authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-        }})
-        .then(res => {
-            console.log(res)
-            setClub(res.data)
+            {
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => {
+                console.log(res)
+                setClub(res.data)
 
-            if(res.data === null || !(res.data.members.includes(user._id))){
-                //Someone snuck into the club do something 
-                console.log("User not in club or club doesnt exist")
-            }
-        })
-        .catch(e => console.log(e));
+                if (res.data === null || !(res.data.members.includes(user._id))) {
+                    //Someone snuck into the club do something 
+                    console.log("User not in club or club doesnt exist")
+                }
+            })
+            .catch(e => console.log(e));
     }, []);
 
-        return (
-            <ThemeProvider theme={mdTheme}>
-                <Box sx={{ display: 'flex', mt: 3 }}>
-                    <CssBaseline />
-                    {/* Background */}
-                    <Container maxWidth="md" sx={{ mt: 2, mb: 4 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={8} md={8} lg={9} >
-                                {/* Create a Book club title */}
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        minHeight: 250,
-                                    }}
-                                >
-                                    <Typography component="h1" variant="h3" paddingBottom={'1rem'} paddingLeft={'1rem'}>
-                                        Book Club Name Here
+    return (
+        <ThemeProvider theme={mdTheme}>
+            <Box sx={{ display: 'flex', mt: 3 }}>
+                <CssBaseline />
+                {/* Background */}
+                <Container maxWidth="md" sx={{ mt: 2, mb: 4 }}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={8} md={8} lg={9} >
+                            {/* Create a Book club title */}
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    minHeight: 250,
+                                }}
+                            >
+                                <Typography component="h1" variant="h3" paddingBottom={'1rem'} paddingLeft={'1rem'}>
+                                    {bookclub.Name}
+                                </Typography>
+                                {/* Club Input -- Name & Code */}
+                                <Grid container rowSpacing={1} flexDirection={'column'} columnSpacing={{ xs: 1, sm: 2, md: 3, }}>
+                                    <Typography component="h2" variant="h5" paddingBottom={'1rem'} paddingLeft={'3rem'}>
+                                        Book Title: {bookclub.BookTitle}
                                     </Typography>
-                                    {/* Club Input -- Name & Code */}
-                                    <Grid container rowSpacing={1} flexDirection={'column'} columnSpacing={{ xs: 1, sm: 2, md: 3, }}>
-                                        <Typography component="h2" variant="h5" paddingBottom={'1rem'} paddingLeft={'3rem'}>
-                                            Book Title: "Title"
-                                        </Typography>
-                                        <Typography component="h2" paddingBottom={'1rem'} paddingLeft={'3rem'}>
-                                            Book Length: "Length"
-                                        </Typography>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={4} md={4} lg={3}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: 250,
-                                    }}
-                                >
-                                    {/* Image Preview */}
-                                    <img src={testImage} width="100%" height="215px" name="bookImage" />
-                                </Paper>
-                            </Grid>
-                            {/* Comment Grid */}
-                            <Grid item xs={10} md={12} lg={12} >
-                                <Paper
-                                    sx={{
-                                        p: 3,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        minHeight: 250,
-                                    }}
-                                >
+                                    <Typography component="h2" paddingBottom={'1rem'} paddingLeft={'3rem'}>
+                                        Book Length: "{bookclub.BookLength}"
+                                    </Typography>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4} md={4} lg={3}>
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: 250,
+                                }}
+                            >
+                                {/* Image Preview */}
+                                <img src={bookclub.Image} width="100%" height="215px" name="bookImage" />
+                            </Paper>
+                        </Grid>
+                        {/* Comment Grid */}
+                        <Grid item xs={10} md={12} lg={12} >
+                            <Paper
+                                sx={{
+                                    p: 3,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    minHeight: 250,
+                                }}
+                            >
                                 {/* comment box */}
-                                    <Typography component="h1" variant="h5" paddingBottom={'1rem'} paddingLeft={'1rem'}>Comments:</Typography>
-                                    <Paper
+
+                                <Typography component="h1" variant="h5" paddingBottom={'1rem'} paddingLeft={'1rem'}>Comments:</Typography>
+                                <Paper
                                     sx={{
                                         p: 3,
                                         display: 'flex',
@@ -146,9 +172,10 @@ function DashboardContent() {
                                         marginBottom: 3,
                                     }}
                                 >
+
                                     {/* Submit comment */}
-                                    </Paper>
-                                    <Paper
+                                </Paper>
+                                <Paper
                                     sx={{
                                         p: 2,
                                         display: 'flex',
@@ -157,21 +184,21 @@ function DashboardContent() {
                                         minHeight: 30,
                                     }}
                                 >
-                                    <TextField placeholder='Enter Comment' variant='outlined' fullWidth multiline rows={2}  onChange={(newValue) => setComment(newValue.target.value)}  />
-                                    <Button variant="contained" sx={{ marginTop: 2}} onClick={postComment}>Submit</Button>
+                                    <TextField placeholder='Enter Comment' variant='outlined' fullWidth multiline rows={2} onChange={(newValue) => setComment(newValue.target.value)} />
+                                    <Button variant="contained" sx={{ marginTop: 2 }} onClick={postComment}>Submit</Button>
                                 </Paper>
-                                </Paper>
-                            </Grid>
-                            {/* Create Club Button */}
-                            {/* <Button variant="contained" sx={{ marginTop: 3, marginLeft: 3 }} onClick={uploadData}>Create Club</Button> */}
-                            {/* <TextField placeholder='Enter Comment' variant='outlined' fullWidth multiline rows={4} ref={inputRef} onChange={onChangeTextValue} /> */}
+                            </Paper>
                         </Grid>
+                        {/* Create Club Button */}
+                        {/* <Button variant="contained" sx={{ marginTop: 3, marginLeft: 3 }} onClick={uploadData}>Create Club</Button> */}
+                        {/* <TextField placeholder='Enter Comment' variant='outlined' fullWidth multiline rows={4} ref={inputRef} onChange={onChangeTextValue} /> */}
+                    </Grid>
 
-                    </Container>
-                </Box>
-            </ThemeProvider>
-        );
-    }
+                </Container>
+            </Box>
+        </ThemeProvider>
+    );
+}
 
 export default function Dashboard() {
     return <DashboardContent />;
