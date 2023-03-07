@@ -22,7 +22,11 @@ function App() {
         <Route path="/joinClub" element={<JoinClub />} />
         <Route path="/Code" element={<Code />} />
         <Route path="/createClub" element={<CreateClub />} />
-        <Route path="/club" element={<Club />} />
+        
+        {/* can remove this when done designing*/}
+        <Route path="/club/" element={<Club />} />
+
+        <Route path="/club/:code" element={<Club />} />
       </Routes>
     </Router>
   );

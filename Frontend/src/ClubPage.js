@@ -12,7 +12,9 @@ import Button from '@mui/material/Button';
 import BookImage from './images/book.png';
 import testImage from './images/bookExamp.jpg';
 import { CommentSection } from 'react-comments-section';
+import axios from 'axios';
 import 'react-comments-section/dist/index.css';
+import { useParams } from 'react-router-dom';
 
 const mdTheme = createTheme({
     palette: {
@@ -29,16 +31,55 @@ const mdTheme = createTheme({
 });
 
 function DashboardContent() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const clubCode = useParams().code
+
+    const [bookclub, setClub] = useState({});
     const [comment, setComment] = useState('');
 
 
     const postComment = () => {
         console.log(comment);
+
+        axios.post(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/comment`, {
+            "bookClubCode": clubCode,
+            "username": user.username,
+            "comment": comment
+        }, {headers: {
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }})
+            .then(res => {
+                console.log(res)
+            })
+            .catch(e => {
+                console.log(e)
+            })
     };
 
     const uploadData = () => {
-         console.log("Upload Data");
+        console.log("Upload Data");
     };
+
+    // Gets the clubs data when the page opens
+    React.useEffect(() => {
+        //console.log(user)
+        axios.get(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/club/${clubCode}`,
+        {headers: {
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }})
+        .then(res => {
+            console.log(res)
+            setClub(res.data)
+
+            if(res.data === null || !(res.data.members.includes(user._id))){
+                //Someone snuck into the club do something 
+                console.log("User not in club or club doesnt exist")
+            }
+        })
+        .catch(e => console.log(e));
+    }, []);
 
         return (
             <ThemeProvider theme={mdTheme}>
