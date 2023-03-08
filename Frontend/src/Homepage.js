@@ -11,10 +11,12 @@ import Paper from '@mui/material/Paper';
 import Calendar from 'react-calendar';
 import Stack from '@mui/material/Stack';
 // import useState from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import './Calender.css';
+import axios from 'axios';
 // import { mainListItems, secondaryListItems } from './listItems';
+
 
 const drawerWidth = 240;
 
@@ -46,10 +48,31 @@ function DashboardContent() {
   let user = JSON.parse(localStorage.getItem('user'))
   const [value, onChange] = useState(new Date());
   const [open, setOpen] = React.useState(true);
+  const [clubs, setClubs] = useState({})
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  
+
+  useEffect(() => {
+    //console.log(user)
+    axios.get(`https://0io5c6icc0.execute-api.us-west-2.amazonaws.com/bookclub/user/clubs`,
+      {
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        console.log(res)
+        setClubs(res.data)
+      })
+      .catch(e => console.log(e));
+
+  }, []);
+
+  console.log(clubs[0])
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -72,11 +95,6 @@ function DashboardContent() {
                   Welcome, {user.username}
                 </Typography>
                 {/* Book club stack */}
-                <Stack spacing={2} direction="column" alignContent={'stretch'} justifyContent='space-evenly' paddingTop={'1rem'}>
-                  <Button variant="contained" href="" color="secondary" style={{ justifyContent: "flex-start", textTransform: "none" }}>Club Name: Book Title</Button>
-                  <Button variant="contained" href="" color="secondary" style={{ justifyContent: "flex-start", textTransform: "none" }}>Club Name: Book Title</Button>
-                  <Button variant="contained" href="" color="secondary" style={{ justifyContent: "flex-start", textTransform: "none" }}>Club Name: Book Title</Button>
-                </Stack>
               </Paper>
             </Grid>
             {/* Calendar */}
@@ -100,6 +118,32 @@ function DashboardContent() {
                   <Button variant="contained" href="/createClub" color="primary" style={{ textTransform: "none", width: "30rem", letterSpacing: "2px" }}>Create New Club</Button>
                 </Stack>
               </Paper>
+            </Grid>
+          </Grid>
+          <Grid>
+            <Grid item xs={12}>
+              {
+                clubs[0] ?
+                  clubs.map(club => {
+                    return (
+                      <Grid item xs={1}
+                        style={{
+                          height: "500px",
+                          width: "575px",
+                          display: 'inline',
+                          float: "left"
+                        }}>
+                        <Paper sx={{ p: 10, display: 'flex', flexDirection: 'column', margin: "20" }}>
+                          <img src={club.Image} width="100%" height="400px" name="bookImage" />
+                          <Button variant="contained" href={'/club/' + club._id} color="secondary" style={{}}>{club.Name}: {club.BookTitle}</Button>
+                        </Paper>
+
+                      </Grid>
+                    )
+                  })
+                  :
+                  <Stack spacing={2} direction="column" alignContent={'stretch'} justifyContent='space-evenly' paddingTop={'1rem'}> No Club. Join a club!</Stack>
+              }
             </Grid>
           </Grid>
         </Container>
