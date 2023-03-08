@@ -4,5 +4,12 @@ client = MongoClient('mongodb+srv://team1:fV7v57oPgnrrhiiP@theclub.bzkoudj.mongo
 db = client['Bookclub']['Clubs']
 
 def lambda_handler(event, context):
-    db.delete_one({'_id' : event['bookClubCode']})
-    return "Bookclub deleted"
+    club = db.find_one({'_id' : event['bookClubCode']})
+
+    if(event['userEmail' == club['Owner']]):
+        db.delete_one({'_id' : event['bookClubCode']})
+        response =  "Bookclub deleted"
+    else:
+        response = "Unauthorized. User is not the owner."
+
+    return response

@@ -30,7 +30,7 @@ const theme = createTheme({
     }
 });
 
-const pages = ['Home', 'Login', 'Sign Up'];
+const pages = ['Login', 'Sign Up', 'Home'];
 const settings = ['Profile', 'Settings', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -103,14 +103,13 @@ function ResponsiveAppBar() {
               }}
             >
               {/* navbar pages */}
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
-          
           <Typography
             variant="h5"
             noWrap
@@ -130,7 +129,7 @@ function ResponsiveAppBar() {
           </Typography>
           {/* pages */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -138,7 +137,10 @@ function ResponsiveAppBar() {
               >
                 {page}
               </Button>
-            ))}
+            ))} */}
+            <Button href="/login" sx={{ my: 2, color: 'white', display: 'block'}}>Log In</Button>
+            <Button href="/signup" sx={{ my: 2, color: 'white', display: 'block'}}>Sign Up</Button>
+            <Button href="/home" sx={{ my: 2, color: 'white', display: 'block'}}>Home</Button>
 
           </Box>
           
