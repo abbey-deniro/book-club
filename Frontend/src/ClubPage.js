@@ -180,7 +180,7 @@ function DashboardContent() {
                                             >
                                                 <Typography component='h6' variant='h6' sx={{textDecoration: 'underline'}}>{comment.user}</Typography>
                                                 <Typography component='h5' variant='h6'>{comment.comment}</Typography>
-                                                <Typography component='h7'>{moment(comment.time).format('HH:mm MM/DD/YYYY')}</Typography>
+                                                <Typography component='h7'>{moment(comment.time).utcOffset(-14).format('h:mm:ss a MM/DD/YYYY')}</Typography>
                                             </Paper>
                                         )
 
